@@ -38,7 +38,7 @@ export const getById = async (id: number): Promise<Task | undefined> => {
 export const create = async (task: Task): Promise<void> => {
   const { title, description, status, priority, user_sub, img_URL } = task;
   await db.query(
-    'INSERT INTO Tasks (title, description, status, priority, user_sub, img_URL, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())',
+    'INSERT INTO Tasks (title, description, status, priority, user_sub, img_URL, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
     [title, description, status, priority, user_sub, img_URL]
   );
 };
@@ -49,7 +49,7 @@ export const create = async (task: Task): Promise<void> => {
 export const update = async (id: number, task: Partial<Task>): Promise<void> => {
   const { title, description, status, priority, img_URL } = task;
   await db.query(
-    'UPDATE Tasks SET title = ?, description = ?, status = ?, priority = ?, img_URL = ?, updated_at = NOW() WHERE id = ?',
+    'UPDATE Tasks SET title = ?, description = ?, status = ?, priority = ?, img_URL = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
     [title, description, status, priority, img_URL, id]
   );
 };

@@ -28,7 +28,7 @@ export const list = async (req: Request, res: Response) => {
   if (all && req.oidc.user && req.oidc.user.sub === process.env.ADMIN_SUB) {
     tasks = await Task.getAll();
   } else {
-    const userSub = req.oidc.user?.sub;
+    const userSub = req.oidc.user?.sub ?? '';
     tasks = await Task.getByUserSub(userSub);
   }
 
@@ -103,7 +103,7 @@ export const create = [
   async (req: Request, res: Response) => {
     try {
       const { title, description, status, priority } = req.body;
-      const user_sub = req.oidc.user?.sub;
+      const user_sub = req.oidc.user?.sub ?? '';
       let img_URL = null;
 
       if (req.file) {
